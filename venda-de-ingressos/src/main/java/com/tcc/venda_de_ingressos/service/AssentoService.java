@@ -1,6 +1,7 @@
 package com.tcc.venda_de_ingressos.service;
 
 import com.tcc.venda_de_ingressos.entity.Assento;
+import com.tcc.venda_de_ingressos.entity.StatusAssento;
 import com.tcc.venda_de_ingressos.repository.AssentoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,10 @@ public class AssentoService {
 
     public boolean reserveAssento(UUID id) {
         var objectFound = this.findById(id);
-        if(objectFound == null)
+        if((objectFound == null) || (objectFound.getStatus() == StatusAssento.RESERVADO))
             return false;
 
-        this.repository.reserveAssento(id);
+        this.repository.reserveAssento(id, StatusAssento.RESERVADO);
         return true;
     }
 

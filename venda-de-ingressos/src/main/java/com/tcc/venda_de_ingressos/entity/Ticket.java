@@ -20,14 +20,8 @@ public class Ticket {
     private UUID id;
     @ManyToOne
     @NotNull
-    private Filme filme;
-    @ManyToOne
-    @NotNull
-    private Sala sala;
+    private HorarioSala informacoes;
     private LocalDateTime horaCompra = LocalDateTime.now();
-    @NotNull
-    @ManyToOne
-    private Horario horario;
     @ManyToOne
     @NotNull
     private Assento assento;

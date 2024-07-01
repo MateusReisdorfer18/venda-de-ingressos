@@ -122,12 +122,12 @@ public class SalaController {
     }
 
     @PatchMapping("/filme/horario")
-    public ResponseEntity<HorarioSala> addFilmeToHorario(@RequestBody @Valid FilmeHorarioDTO filmeHorario) {
+    public ResponseEntity<Boolean> addFilmeToHorario(@RequestBody @Valid FilmeHorarioDTO filmeHorario) {
         var returnUpdate = this.horarioSalaService.connectHorarioWithFilme(filmeHorario);
-        if(returnUpdate == null)
+        if(!returnUpdate)
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok(returnUpdate);
+        return ResponseEntity.ok(true);
     }
 
     @DeleteMapping("/{id}")

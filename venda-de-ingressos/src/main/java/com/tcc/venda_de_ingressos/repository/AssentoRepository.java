@@ -1,6 +1,7 @@
 package com.tcc.venda_de_ingressos.repository;
 
 import com.tcc.venda_de_ingressos.entity.Assento;
+import com.tcc.venda_de_ingressos.entity.StatusAssento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,8 +16,8 @@ import java.util.UUID;
 public interface AssentoRepository extends JpaRepository<Assento, UUID> {
     @Modifying
     @Transactional
-    @Query("UPDATE Assento a SET a.status = RESERVADO WHERE a.id = :id")
-    void reserveAssento(@Param("id") UUID id);
+    @Query("UPDATE Assento a SET a.status = :STATUS WHERE a.id = :id")
+    void reserveAssento(@Param("id") UUID id, @Param("STATUS") StatusAssento status);
 
     @Modifying
     @Transactional

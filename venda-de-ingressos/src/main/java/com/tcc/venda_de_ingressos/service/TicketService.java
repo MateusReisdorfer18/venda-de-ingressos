@@ -29,9 +29,9 @@ public class TicketService {
     }
 
     public Ticket create(Ticket ticket) {
-        var disponibilidadeSala = this.horarioSalaService.consultDisponibilidade(ticket.getSala().getId(), ticket.getHorario().getId());
+        var disponibilidadeHorarioSala = this.horarioSalaService.consultDisponibilidade(ticket.getInformacoes().getSala().getId(), ticket.getInformacoes().getHorario().getId());
         var assentoDisponibilidade = this.assentoService.consultDisponibilidade(ticket.getAssento().getId());
-        if(!assentoDisponibilidade || !disponibilidadeSala)
+        if(!assentoDisponibilidade || !disponibilidadeHorarioSala)
             return null;
 
         var returnReserve = this.assentoService.reserveAssento(ticket.getAssento().getId());

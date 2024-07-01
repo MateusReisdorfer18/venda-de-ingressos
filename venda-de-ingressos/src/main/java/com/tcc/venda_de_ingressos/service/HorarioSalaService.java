@@ -77,14 +77,14 @@ public class HorarioSalaService {
         return this.repository.save(objectFound);
     }
 
-    public HorarioSala connectHorarioWithFilme(FilmeHorarioDTO filmeHorario) {
+    public boolean connectHorarioWithFilme(FilmeHorarioDTO filmeHorario) {
         var horarioSala = this.findById(filmeHorario.horarioSala().getId());
         var filme = this.filmeService.findById(filmeHorario.filme().getId());
         if((horarioSala == null) || (filme == null))
-            return null;
+            return false;
 
         this.repository.connectHorarioWithFilme(filmeHorario.filme(), filmeHorario.horarioSala().getSala(), filmeHorario.horarioSala().getHorario());
-        return this.findById(filmeHorario.horarioSala().getId());
+        return true;
     }
 
     public boolean updateDisponibilidadeHorario(UUID salaId, Horario horario) {
