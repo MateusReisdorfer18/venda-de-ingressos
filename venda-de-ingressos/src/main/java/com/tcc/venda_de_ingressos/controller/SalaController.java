@@ -1,6 +1,5 @@
 package com.tcc.venda_de_ingressos.controller;
 
-import com.tcc.venda_de_ingressos.entity.FilmeHorarioDTO;
 import com.tcc.venda_de_ingressos.entity.Horario;
 import com.tcc.venda_de_ingressos.entity.HorarioSala;
 import com.tcc.venda_de_ingressos.entity.Sala;
@@ -52,7 +51,7 @@ public class SalaController {
         return ResponseEntity.ok(horarios);
     }
 
-    @GetMapping("/{id}/horarios/disponibilidade")
+    @GetMapping("/{id}/horario/disponibilidade")
     public ResponseEntity<List<HorarioSala>> findHorariosBySalaAndDisponibilidade(@PathVariable UUID id, @RequestBody Map<String, Boolean> params) {
         var horarios = this.horarioSalaService.findBySalaAndDisponibilidade(id, params.get("disponibilidade"));
         if(horarios == null)
@@ -94,7 +93,7 @@ public class SalaController {
         return new ResponseEntity<>(salaReturn, HttpStatus.CREATED);
     }
 
-    @PostMapping("/horario")
+    @PostMapping("horario")
     public ResponseEntity<HorarioSala> addHorario(@RequestBody @Valid HorarioSala horarioSala) {
         var horarioSalaReturn = this.horarioSalaService.create(horarioSala);
         if(horarioSalaReturn == null)
@@ -115,15 +114,6 @@ public class SalaController {
     @PatchMapping("/{id}/horario")
     public ResponseEntity<Boolean> updateDisponibilidadeHorario(@PathVariable UUID id, @RequestBody @Valid Horario horario) {
         var returnUpdate = this.horarioSalaService.updateDisponibilidadeHorario(id, horario);
-        if(!returnUpdate)
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok(true);
-    }
-
-    @PatchMapping("/filme/horario")
-    public ResponseEntity<Boolean> addFilmeToHorario(@RequestBody @Valid FilmeHorarioDTO filmeHorario) {
-        var returnUpdate = this.horarioSalaService.connectHorarioWithFilme(filmeHorario);
         if(!returnUpdate)
             return ResponseEntity.notFound().build();
 

@@ -1,8 +1,6 @@
 package com.tcc.venda_de_ingressos.service;
 
-import com.tcc.venda_de_ingressos.entity.FilmeHorarioDTO;
-import com.tcc.venda_de_ingressos.entity.Horario;
-import com.tcc.venda_de_ingressos.entity.HorarioSala;
+import com.tcc.venda_de_ingressos.entity.*;
 import com.tcc.venda_de_ingressos.repository.HorarioSalaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,9 @@ public class HorarioSalaService {
 
     @Autowired
     private FilmeService filmeService;
+
+    @Autowired
+    private AssentoService assentoService;
 
     public List<HorarioSala> findAll() {
         return this.repository.findAll();
@@ -65,6 +66,26 @@ public class HorarioSalaService {
         if((sala == null) || (horario == null))
             return null;
 
+        int tamanho = 0;
+        switch (sala.getTamanho().toString()) {
+            case "GRANDE":
+                tamanho = 50;
+            case "MEDIA":
+                tamanho = 35;
+            case "PEQUENA":
+                tamanho = 20;
+        }
+
+        if(tamanho == 0)
+            return null;
+
+        for(int i=0; i<tamanho; i++) {
+            var assento = new Assento();
+            assento.setNome(sala.getNome() + (i+1));
+            this.assentoService.create(assento);
+            params.getAssentos().add(assento);
+        }
+
         return this.repository.save(params);
     }
 
@@ -75,16 +96,6 @@ public class HorarioSalaService {
 
         BeanUtils.copyProperties(params, objectFound);
         return this.repository.save(objectFound);
-    }
-
-    public boolean connectHorarioWithFilme(FilmeHorarioDTO filmeHorario) {
-        var horarioSala = this.findById(filmeHorario.horarioSala().getId());
-        var filme = this.filmeService.findById(filmeHorario.filme().getId());
-        if((horarioSala == null) || (filme == null))
-            return false;
-
-        this.repository.connectHorarioWithFilme(filmeHorario.filme(), filmeHorario.horarioSala().getSala(), filmeHorario.horarioSala().getHorario());
-        return true;
     }
 
     public boolean updateDisponibilidadeHorario(UUID salaId, Horario horario) {

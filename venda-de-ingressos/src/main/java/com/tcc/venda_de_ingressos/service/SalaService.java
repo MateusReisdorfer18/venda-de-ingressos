@@ -63,13 +63,6 @@ public class SalaService {
     }
 
     public Sala create(Sala sala) {
-        for(int i=0; i<50; i++) {
-            var assento = new Assento();
-            assento.setNome(sala.getNome() + (i+1));
-            this.assentoService.create(assento);
-            sala.getAssentos().add(assento);
-        }
-
         return this.repository.save(sala);
     }
 

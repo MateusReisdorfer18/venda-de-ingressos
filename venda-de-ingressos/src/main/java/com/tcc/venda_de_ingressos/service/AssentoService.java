@@ -2,6 +2,7 @@ package com.tcc.venda_de_ingressos.service;
 
 import com.tcc.venda_de_ingressos.entity.Assento;
 import com.tcc.venda_de_ingressos.entity.StatusAssento;
+import com.tcc.venda_de_ingressos.entity.StatusSala;
 import com.tcc.venda_de_ingressos.repository.AssentoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class AssentoService {
     }
 
     public boolean consultDisponibilidade(UUID id) {
-        var assento = this.repository.consultDisponibilidade(id);
+        var assento = this.repository.consultDisponibilidade(id, StatusAssento.DISPONIVEL);
         return assento.isPresent();
     }
 

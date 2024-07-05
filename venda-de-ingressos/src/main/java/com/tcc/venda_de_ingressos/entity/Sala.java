@@ -21,8 +21,6 @@ public class Sala {
     private UUID id;
     @NotNull
     private String nome;
-    @OneToMany
-    private List<Assento> assentos = new ArrayList<>();
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     private TipoSala tipo;

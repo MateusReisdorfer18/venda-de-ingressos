@@ -17,4 +17,5 @@ public interface SalaRepository extends JpaRepository<Sala, UUID> {
     List<Sala> findByTipo(TipoSala tipo);
     List<Sala> findByTamanho(TamanhoSala tamanho);
     List<Sala> findByDisponibilidade(StatusSala disponibilidade);
+
 }

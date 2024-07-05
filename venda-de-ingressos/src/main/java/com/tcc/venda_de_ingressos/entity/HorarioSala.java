@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,7 +25,10 @@ public class HorarioSala {
     @ManyToOne
     @NotNull
     private Sala sala;
+    @ManyToMany
+    private List<Assento> assentos = new ArrayList<>();
     @ManyToOne
+    @NotNull
     private Filme filme;
     private boolean disponibilidade;
 }

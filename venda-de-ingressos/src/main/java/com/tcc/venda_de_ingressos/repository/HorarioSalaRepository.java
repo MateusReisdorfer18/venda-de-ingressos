@@ -23,10 +23,6 @@ public interface HorarioSalaRepository extends JpaRepository<HorarioSala, UUID> 
     List<HorarioSala> findBySalaAndDisponibilidade(Sala sala, Boolean disponibilidade);
     @Modifying
     @Transactional
-    @Query("UPDATE HorarioSala hs SET hs.filme = :FILME WHERE hs.sala = :SALA AND hs.horario = :HORARIO")
-    void connectHorarioWithFilme(@Param("FILME") Filme filme, @Param("SALA") Sala sala, @Param("HORARIO") Horario horario);
-    @Modifying
-    @Transactional
     @Query("UPDATE HorarioSala hs SET hs.disponibilidade = :DISPONIBILIDADE WHERE hs.sala = :SALA AND hs.horario = :HORARIO")
     void updateDisponibilidade(@Param("SALA") Sala sala, @Param("HORARIO") Horario horario, @Param("DISPONIBILIDADE") boolean disponibilidade);
 }
